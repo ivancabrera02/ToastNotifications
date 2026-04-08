@@ -17,7 +17,7 @@ This repository documents how threat actors can **abuse trusted AUMIDs** to disp
 
 ### 1. Enumerate AUMIDs on the Target System
 
-**Method 1 — Start Menu (UWP + LNK shortcuts):**
+**Method 1 Start Menu (UWP + LNK shortcuts):**
 ```powershell
 $uwp = Get-StartApps | Select-Object -ExpandProperty AppID
 $lnk = & {
@@ -37,12 +37,12 @@ $lnk = & {
 ($uwp + $lnk) | Where-Object { $_ } | Sort-Object -Unique
 ```
 
-**Method 2 — AppX Packages:**
+**Method 2 AppX Packages:**
 ```powershell
 Get-AppxPackage | Select Name, PackageFamilyName
 ```
 
-**Method 3 — Notification Registry Hive:**
+**Method 3 Notification Registry Hive:**
 ```powershell
 $notificationPaths = @(
     "HKCU:\SOFTWARE\Microsoft\Windows\CurrentVersion\Notifications\Settings",
@@ -116,9 +116,9 @@ $notifier.Show($toast)
 | 02 | Re-authentication button | MSEdge | Credential Phishing | — | URL redirect |
 | 03 | Security alert dual button | MSEdge | Credential Phishing | — | URL redirect |
 | 04 | Fake update attribution | MSEdge | Malware delivery | — | URL redirect |
-| 05 | Incoming call — CISO | Teams | Vishing | Text input | Protocol |
+| 05 | Incoming call CISO | Teams | Vishing | Text input | Protocol |
 | 06 | SOC incident selector | Teams | SOC Phishing | Selection | Protocol |
-| 07 | HR message — text input | Teams | Credential Phishing | Text input | Protocol |
+| 07 | HR message | Teams | Credential Phishing | Text input | Protocol |
 | 08 | Urgent meeting invite | Teams | Lateral Movement | — | URL redirect |
 | 09 | Deepfake video call | Teams | Vishing / Deepfake | Text input | Protocol |
 | 10 | Zoom meeting in progress | Zoom | Pretexting | — | URL redirect |
@@ -138,7 +138,7 @@ $notifier.Show($toast)
 | 24 | Phone Link new device | Phone Link | Account Takeover | — | URL redirect |
 | 25 | Proton Mail encrypted msg | Proton Mail | Credential Phishing | — | URL redirect |
 
-## 📜 Scripts — All 25 Examples
+## 📜 Scripts - All 25 Examples
  
 > The WinRT loader block is identical in every script. All URLs use `attacker.example.com` as a placeholder — replace with your authorized infrastructure.
  
@@ -155,7 +155,7 @@ Add-Type -AssemblyName System.Runtime.WindowsRuntime
 # $notifier.Show($toast)
 ```
  
-### 01 — Teams: Incoming Call from CISO
+### 01 Teams: Incoming Call from CISO
  
 **AUMID:** `MSTeams_8wekyb3d8bbwe!MSTeams` · **Category:** Vishing / Impersonation
  
@@ -196,7 +196,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 02 — Teams: Active Security Incident Alert (SOC Phishing)
+### 02 Teams: Active Security Incident Alert (SOC Phishing)
  
 **AUMID:** `MSTeams_8wekyb3d8bbwe!MSTeams` · **Category:** SOC Phishing
  
@@ -238,7 +238,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
 
-### 03 — Teams: HR Message with Text Input (Credential Harvesting)
+### 03 Teams: HR Message with Text Input (Credential Harvesting)
  
 **AUMID:** `MSTeams_8wekyb3d8bbwe!MSTeams` · **Category:** Credential Phishing
  
@@ -277,7 +277,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 04 — Teams: Urgent Meeting Invite (Lateral Movement)
+### 04 Teams: Urgent Meeting Invite (Lateral Movement)
  
 **AUMID:** `MSTeams_8wekyb3d8bbwe!MSTeams` · **Category:** Lateral Movement
  
@@ -315,7 +315,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 05 — Teams: Deepfake Video Call
+### 05 Teams: Deepfake Video Call
  
 **AUMID:** `MSTeams_8wekyb3d8bbwe!MSTeams` · **Category:** Vishing / Deepfake
  
@@ -356,7 +356,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 06 — Zoom: Meeting In Progress Without You
+### 06 Zoom: Meeting In Progress Without You
  
 **AUMID:** `zoom.us.Zoom Video Meetings` · **Category:** Urgency / Pretexting
  
@@ -394,7 +394,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 07 — Zoom: Critical Security Update Required
+### 07 Zoom: Critical Security Update Required
  
 **AUMID:** `zoom.us.Zoom Video Meetings` · **Category:** Fake Update / Malware Delivery
  
@@ -431,7 +431,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 08 — Chrome: Google Workspace Session Expired
+### 08 Chrome: Google Workspace Session Expired
  
 **AUMID:** `Chrome` · **Category:** Credential Phishing
  
@@ -469,7 +469,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 09 — Chrome: Corporate Security Extension Blocked
+### 09 Chrome: Corporate Security Extension Blocked
  
 **AUMID:** `Chrome` · **Category:** Fake Extension / Malware Delivery
  
@@ -506,7 +506,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 10 — Windows Defender: Ransomware Blocked
+### 10 Windows Defender: Ransomware Blocked
  
 **AUMID:** `Microsoft.SecHealthUI_8wekyb3d8bbwe!SecHealthUI` · **Category:** Fake AV Alert
  
@@ -543,7 +543,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 11 — Windows Defender: Protection License Expired
+### 11 Windows Defender: Protection License Expired
  
 **AUMID:** `Microsoft.SecHealthUI_8wekyb3d8bbwe!SecHealthUI` · **Category:** Fake Expiry
  
@@ -580,7 +580,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 12 — Microsoft Copilot: Unauthorized Data Access
+### 12 Microsoft Copilot: Unauthorized Data Access
  
 **AUMID:** `Microsoft.Copilot_8wekyb3d8bbwe!App` · **Category:** Pretexting
  
@@ -617,7 +617,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 13 — Microsoft Copilot: Data Leak Detected
+### 13 Microsoft Copilot: Data Leak Detected
  
 **AUMID:** `Microsoft.Copilot_8wekyb3d8bbwe!App` · **Category:** Data Exfiltration Lure
  
@@ -654,7 +654,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 14 — OneDrive Desktop: Files Pending Deletion
+### 14 OneDrive Desktop: Files Pending Deletion
  
 **AUMID:** `Microsoft.SkyDrive.Desktop` · **Category:** Urgency / Phishing
  
@@ -692,7 +692,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 15 — Office Hub: Microsoft 365 License Expired
+### 15 Office Hub: Microsoft 365 License Expired
  
 **AUMID:** `Microsoft.MicrosoftOfficeHub_8wekyb3d8bbwe!Microsoft.MicrosoftOfficeHub` · **Category:** Credential Phishing
  
@@ -730,7 +730,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 16 — Windows Store: Mandatory IT Security App
+### 16 Windows Store: Mandatory IT Security App
  
 **AUMID:** `Microsoft.WindowsStore_8wekyb3d8bbwe!App` · **Category:** Fake App / Malware Delivery
  
@@ -767,7 +767,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 17 — Quick Assist: IT Remote Support Request
+### 17 Quick Assist: IT Remote Support Request
  
 **AUMID:** `MicrosoftCorporationII.QuickAssist_8wekyb3d8bbwe!App` · **Category:** Remote Access / Lateral Movement
  
@@ -806,7 +806,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 18 — Phone Link: Unknown Device Linked
+### 18 Phone Link: Unknown Device Linked
  
 **AUMID:** `Microsoft.YourPhone_8wekyb3d8bbwe!App` · **Category:** Account Takeover
  
@@ -843,7 +843,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 19 — Slack: CEO Direct Message Fraud (BEC)
+### 19 Slack: CEO Direct Message Fraud (BEC)
  
 **AUMID:** `com.squirrel.slack.slack` · **Category:** BEC / CEO Fraud
  
@@ -881,7 +881,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 20 — Slack: #security-alerts Channel IOC
+### 20 Slack: #security-alerts Channel IOC
  
 **AUMID:** `com.squirrel.slack.slack` · **Category:** SOC Phishing
  
@@ -918,7 +918,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 21 — Proton Mail: Encrypted Message Received
+### 21 Proton Mail: Encrypted Message Received
  
 **AUMID:** `com.squirrel.proton_mail.ProtonMail` · **Category:** Credential Phishing
  
@@ -956,7 +956,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 22 — VS Code: Compromised Extension Detected
+### 22 VS Code: Compromised Extension Detected
  
 **AUMID:** `Microsoft.VisualStudioCode` · **Category:** Developer Targeting
  
@@ -993,7 +993,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 23 — Remote Desktop: Unauthorized RDP Session
+### 23 Remote Desktop: Unauthorized RDP Session
  
 **AUMID:** `Microsoft.Windows.RemoteDesktop` · **Category:** Lateral Movement
  
@@ -1030,7 +1030,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 24 — Windows Terminal: Admin Script Execution Lure
+### 24 Windows Terminal: Admin Script Execution Lure
  
 **AUMID:** `Microsoft.WindowsTerminal_8wekyb3d8bbwe!App` · **Category:** Privilege Escalation Lure
  
@@ -1067,7 +1067,7 @@ $notifier = [Windows.UI.Notifications.ToastNotificationManager]::CreateToastNoti
 $notifier.Show($toast)
 ```
  
-### 25 — Xbox / Gaming: Microsoft Points Gift
+### 25 Xbox / Gaming: Microsoft Points Gift
  
 **AUMID:** `Microsoft.GamingApp_8wekyb3d8bbwe!Microsoft.Xbox.App` · **Category:** Social Engineering
  
